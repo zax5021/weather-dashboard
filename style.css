@@ -15,6 +15,10 @@
     border-bottom-width: 0;
 }
 
+h3 {
+    text-align: center;
+}
+
 h5 {
     padding-left: 1.25rem;
 }
