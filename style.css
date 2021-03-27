@@ -1,0 +1,39 @@
+
+.custom-jumbotron {
+   padding: 1rem  0;
+}
+
+#pastSearches {
+    margin-top: 2rem;
+}
+
+#heroWeatherIcon {
+    padding-left: 1rem;
+}
+
+.custom-list-group .list-group-item {
+    border-bottom-width: 0;
+}
+
+h5 {
+    padding-left: 1.25rem;
+}
+
+.forecast-list-group li {
+    background-color: #007bff
+}
+
+.dayForecast {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#forecastCards {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 1rem;
+}
+
+#pastSearches ul:hover {
+    cursor: pointer;
+}

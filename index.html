@@ -9,11 +9,155 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./style.css" />
   <title>Weather Dashboard</title>
 </head>
 <body>
+    <header class="jumbotron jumbotron-fluid bg-secondary text-white custom-jumbotron">
+        <div class="container text-center">
+          <h1>Weather Dashboard</h1>
+        </div>
+      </header>
+    <main class="container-fluid">
+        <div class="row">
+            <section class="col-lg-3">
+                <div class="input-group rounded">
+                    <input type="search" class="form-control rounded" id="searchField" placeholder="Search" aria-label="Search"
+                      aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-secondary border-0" id="search-addon">
+                      <i class="fas fa-search"></i>
+                    </button>
+                </div>
 
+                <div id="pastSearches">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-action active">San Diego</li>
+                        <li class="list-group-item list-group-item-action">London</li>
+                        <li class="list-group-item list-group-item-action">Carlsbad</li>
+                        <li class="list-group-item list-group-item-action">Palm Springs</li>
+                        <li class="list-group-item list-group-item-action">Lagos</li>
+                      </ul>
+                </div>     
+            </section> 
+            <section class="col-lg-9">
+                <div class="card">
+                    <div class="card-body hero-card">
+                        <h5 class="card-title">San Diego
+                            <i id="heroWeatherIcon" class="fas fa-search"></i>
+                        </h5>
+                        <ul class="list-group list-group-flush custom-list-group ">
+                            <li class="list-group-item">Temperature:
+                                <span> 90.9 </span>
+                                <span> &#8457; </span>
+                            </li>
+                            <li class="list-group-item">Humidity:
+                                <span> 41 </span>
+                                <span> % </span>
+                            </li>
+                            <li class="list-group-item">Wind Speed:
+                                <span> 4.7 </span>
+                                <span> MPH </span>
+                            </li>
+                            <li class="list-group-item">UV Index:
+                                <span> 9.49 </span>
+                            </li>
+                          </ul>
+                    </div>
+                </div>
+                <div class="card-deck" id="forecastCards">
+                    <div class="card-body dayForecast bg-primary text-white">
+                        <h5 class="card-title"> 3/28/2021</h5>
+                        <ul class="list-group list-group-flush custom-list-group forecast-list-group">
+                            <li class="list-group-item">
+                                <i id="heroWeatherIcon" class="fas fa-search"></i>
+                            </li>
+                            <li class="list-group-item">Temp:
+                                <span> 86.84</span>
+                                <span> &#8457; </span>
+                            </li>
+                            <li class="list-group-item">Humidity:
+                                <span> 43 </span>
+                                <span> % </span>
+                            </li>
+                          </ul>
+                          
+                        </div>
+                        <div class="card-body dayForecast bg-primary text-white">
+                            <h5 class="card-title"> 3/28/2021</h5>
+                            <ul class="list-group list-group-flush custom-list-group forecast-list-group">
+                                <li class="list-group-item">
+                                    <i id="heroWeatherIcon" class="fas fa-search"></i>
+                                </li>
+                                <li class="list-group-item">Temp:
+                                    <span> 86.84</span>
+                                    <span> &#8457; </span>
+                                </li>
+                                <li class="list-group-item">Humidity:
+                                    <span> 43 </span>
+                                    <span> % </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body dayForecast bg-primary text-white">
+                            <h5 class="card-title"> 3/28/2021</h5>
+                            <ul class="list-group list-group-flush custom-list-group forecast-list-group">
+                                <li class="list-group-item">
+                                    <i id="heroWeatherIcon" class="fas fa-search"></i>
+                                </li>
+                                <li class="list-group-item">Temp:
+                                    <span> 86.84</span>
+                                    <span> &#8457; </span>
+                                </li>
+                                <li class="list-group-item">Humidity:
+                                    <span> 43 </span>
+                                    <span> % </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body dayForecast bg-primary text-white">
+                            <h5 class="card-title"> 3/28/2021</h5>
+                            <ul class="list-group list-group-flush custom-list-group forecast-list-group">
+                                <li class="list-group-item">
+                                    <i id="heroWeatherIcon" class="fas fa-search"></i>
+                                </li>
+                                <li class="list-group-item">Temp:
+                                    <span> 86.84</span>
+                                    <span> &#8457; </span>
+                                </li>
+                                <li class="list-group-item">Humidity:
+                                    <span> 43 </span>
+                                    <span> % </span>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                        <div class="card-body dayForecast bg-primary text-white">
+                            <h5 class="card-title"> 3/28/2021</h5>
+                            <ul class="list-group list-group-flush custom-list-group forecast-list-group">
+                                <li class="list-group-item">
+                                    <i id="heroWeatherIcon" class="fas fa-search"></i>
+                                </li>
+                                <li class="list-group-item">Temp:
+                                    <span> 86.84</span>
+                                    <span> &#8457; </span>
+                                </li>
+                                <li class="list-group-item">Humidity:
+                                    <span> 43 </span>
+                                    <span> % </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+
+
+
+
+
+    
+    </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
