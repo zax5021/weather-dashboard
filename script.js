@@ -4,9 +4,11 @@ var pastSearchesEl = $("#pastSearches");
 var heroListEl = $(".hero-list-group");
 var heroCardEl = $(".hero-card");
 var forecastCardsEl = $("#forecastCards");
+var pastSearchesUl = $("#pastSearchesUl")
 var searchCity;
 var searchCityCoords;
 var cityWeather;
+var saveCityObject= {};
 var savedSearches = [];
 
 function searchSubmit (){
@@ -66,15 +68,43 @@ function getWeather() {
     })
     .then(function (data) {
     cityWeather= data
-    // saveSearch()
+   saveSearch()
     // renderWeather()
 
     })
 }
-// TODO: write saveSearch(69) renderWeather (70) functions
-// write load getSavedCities and renderSavedCities functions
-// function saveSearch(){
+
+function saveSearch() {
+    saveCityObject = {
+        name: searchCity,
+        Coords: searchCityCoords,
+    }
+    savedSearches.push(saveCityObject)
+    localStorage.setItem("savedSearches", JSON.stringify(savedSearches))
+}
+// TODO write renderWeather function
+// function renderWeather() {
 
 // }
+function renderSavedSearches() {
+    
+    
+    for (i=0; i<savedSearches.length; i++){
+        var pastSearchesIl = document.createElement("li");
+        $(pastSearchesIl).addClass("list-group-item list-group-item-action");
+        $(pastSearchesIl).text(savedSearches[i].name);
+        console.log(pastSearchesIl);
+        pastSearchesUl[0].appendChild(pastSearchesIl);
+    }
+    
+}
 
+function init(){
+    savedSearches = JSON.parse(localStorage.getItem("savedSearches"));
+    console.log(savedSearches[0].name);
+    console.log(pastSearchesUl)
+    renderSavedSearches();
+}
+
+init()
 searchBtn.on("click", searchSubmit)
