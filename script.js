@@ -99,31 +99,29 @@ function saveSearch() {
 // TODO write renderWeather function
 function renderWeather() {
     var curTemp = cityWeather.current.temp
-    var curwindSpeed = cityWeather.current.wind_speed
+    var curWindSpeed = cityWeather.current.wind_speed
     var curHumidity = cityWeather.current.humidity
     var curUV = cityWeather.current.uvi
+    var curVars = [curTemp, curHumidity, curWindSpeed, curUV]
 
     heroCardEl.removeClass("hidden")
     heroCardEl.children("h5").text(searchCity)
-    heroCardEl.children("ul").children("li").eq(0).children().first().text(curTemp)
-    heroCardEl.children("ul").children("li").eq(1).children().first().text(curHumidity)
-    heroCardEl.children("ul").children("li").eq(2).children().first().text(curwindSpeed)
-    heroCardEl.children("ul").children("li").eq(3).children().first().text(curUV)
+    for (var i=0; i<4; i++) {
+        heroCardEl.children("ul").children("li").eq(i).children().first().text(curVars[i])
+    }
 
     var dailyWeather = cityWeather.daily
-    var daily
-    //TODO finish the for loop to add the daily info to the cards. Use the above (107-111) code for reference.
+
+    
     forecastCardsEl.removeClass("hidden")
     for (i=1;i<6;i++){
         idx= i-1;
         forecastCardsEl.children().eq(idx).children("h5").text(moment().add(i, "d").format("l"))
-        forecastCardsEl.children().eq(idx).children("ul").
+        forecastCardsEl.children().eq(idx).children("ul").children("li").eq(1).children().first().text(dailyWeather[i].temp.max)
+        forecastCardsEl.children().eq(idx).children("ul").children("li").eq(2).children().first().text(dailyWeather[i].humidity)
         console.log(dailyWeather[i].temp.max)
-        // forecastCardsEl.children
     }
-
     console.log(searchCity)
-    
 }
 
 
@@ -139,11 +137,11 @@ function renderSavedSearches() {
     }    
 
 }}
-
+//TODO Clicking on lis should search that city and render the weather, also switch the li to active. Prevent new searches that match city name from adding a new li. 
 function addSavedSearch() {
     savedSearches = JSON.parse(localStorage.getItem("savedSearchesLocal"));
    var pastSearchesIl = document.createElement("li");
-    $(pastSearchesIl).addClass("list-group-item list-group-item-action");
+    $(pastSearchesIl).addClass("list-group-item list-group-item-action active");
     $(pastSearchesIl).text(savedSearches[savedSearches.length-1].name);
     pastSearchesUl[0].appendChild(pastSearchesIl);
 }
