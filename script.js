@@ -1,23 +1,24 @@
+// @ts-check
 var searchCityEl = $("#searchField");
 var searchBtn = $("#search-addon")
 var pastSearchesEl = $("#pastSearches");
 var heroListEl = $(".hero-list-group");
 var heroCardEl = $(".hero-card");
 var forecastCardsEl = $("#forecastCards");
+// var forecastListUl = $(".forecast-list-group");
 var pastSearchesUl = $("#pastSearchesUl")
 var searchCity;
 var searchCityCoords;
 var cityWeather;
 var saveCityObject= {};
-var savedSearches = [];
+var savedSearches = [] ;
+var storedSearches;
 
 function searchSubmit (){
     searchCity = searchCityEl.val();
     
  getCoord();
 }
-
-
 function getCoord (){
    
     //made api key not work by adding F to beginning
@@ -35,7 +36,9 @@ function getCoord (){
        var cityResponse= response.results[0]
     if (!response.results.length) {
         console.log('No City found!');
+        heroCardEl.removeClass("hidden");
         heroCardEl.children("h5").text("No results found, search again!");
+        return
       } 
         searchCityCoords = {
             latitude: cityResponse.geometry.lat,
@@ -56,7 +59,7 @@ function getWeather() {
     //     latitude: 32.7174202,
     //     longitude: -117.1627728
     // }
-    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + searchCityCoords.latitude + "&lon=" + searchCityCoords.longitude +"&exclude=hourly,minutely&appid=09067483d1a4888ae997aa4f31004a36";
+    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + searchCityCoords.latitude + "&lon=" + searchCityCoords.longitude +"&units=imperial&exclude=hourly,minutely&appid=09067483d1a4888ae997aa4f31004a36";
     console.log(weatherApiUrl)
     fetch(weatherApiUrl)
     .then(function (data) {
@@ -68,8 +71,9 @@ function getWeather() {
     })
     .then(function (data) {
     cityWeather= data
-   saveSearch()
-    // renderWeather()
+   saveSearch();
+    renderWeather()
+     addSavedSearch();
 
     })
 }
@@ -79,30 +83,85 @@ function saveSearch() {
         name: searchCity,
         Coords: searchCityCoords,
     }
+    // if (savedSearches.length===0){
+    //     savedSearches= [
+    //         saveCityObject,
+    //     ]
+    // } else{
+    console.log(savedSearches)   
+    // if(!savedSearches.includes({name:saveCityObject.name})){
     savedSearches.push(saveCityObject)
-    localStorage.setItem("savedSearches", JSON.stringify(savedSearches))
+    // }
+    // }
+    localStorage.setItem("savedSearchesLocal", JSON.stringify(savedSearches))
+    console
 }
 // TODO write renderWeather function
-// function renderWeather() {
+function renderWeather() {
+    var curTemp = cityWeather.current.temp
+    var curwindSpeed = cityWeather.current.wind_speed
+    var curHumidity = cityWeather.current.humidity
+    var curUV = cityWeather.current.uvi
 
-// }
+    heroCardEl.removeClass("hidden")
+    heroCardEl.children("h5").text(searchCity)
+    heroCardEl.children("ul").children("li").eq(0).children().first().text(curTemp)
+    heroCardEl.children("ul").children("li").eq(1).children().first().text(curHumidity)
+    heroCardEl.children("ul").children("li").eq(2).children().first().text(curwindSpeed)
+    heroCardEl.children("ul").children("li").eq(3).children().first().text(curUV)
+
+    var dailyWeather = cityWeather.daily
+    var daily
+    //TODO finish the for loop to add the daily info to the cards. Use the above (107-111) code for reference.
+    forecastCardsEl.removeClass("hidden")
+    for (i=1;i<6;i++){
+        idx= i-1;
+        forecastCardsEl.children().eq(idx).children("h5").text(moment().add(i, "d").format("l"))
+        forecastCardsEl.children().eq(idx).children("ul").
+        console.log(dailyWeather[i].temp.max)
+        // forecastCardsEl.children
+    }
+
+    console.log(searchCity)
+    
+}
+
+
 function renderSavedSearches() {
-    
-    
+    if(savedSearches.length===0){
+        return
+    }else{
     for (i=0; i<savedSearches.length; i++){
         var pastSearchesIl = document.createElement("li");
         $(pastSearchesIl).addClass("list-group-item list-group-item-action");
         $(pastSearchesIl).text(savedSearches[i].name);
-        console.log(pastSearchesIl);
         pastSearchesUl[0].appendChild(pastSearchesIl);
-    }
-    
+    }    
+
+}}
+
+function addSavedSearch() {
+    savedSearches = JSON.parse(localStorage.getItem("savedSearchesLocal"));
+   var pastSearchesIl = document.createElement("li");
+    $(pastSearchesIl).addClass("list-group-item list-group-item-action");
+    $(pastSearchesIl).text(savedSearches[savedSearches.length-1].name);
+    pastSearchesUl[0].appendChild(pastSearchesIl);
 }
 
 function init(){
-    savedSearches = JSON.parse(localStorage.getItem("savedSearches"));
-    console.log(savedSearches[0].name);
-    console.log(pastSearchesUl)
+  console.log(savedSearches)
+  storedSearches = JSON.parse(localStorage.getItem("savedSearchesLocal"))
+   if(!storedSearches){
+    return
+} 
+for (i=0; i< storedSearches.length; i++){
+    savedSearches.push(storedSearches[i])
+}
+    // savedSearches.push(storedSearches)
+    // }
+    console.log(JSON.parse(localStorage.getItem("savedSearchesLocal")))
+    console.log(savedSearches.length)
+    console.log(typeof savedSearches)
     renderSavedSearches();
 }
 
