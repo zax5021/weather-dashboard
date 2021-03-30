@@ -102,10 +102,10 @@ function renderWeather() {
 
     heroCardEl.removeClass("hidden")
     heroCardEl.children("h5").text(searchCity)
-    $(iconEl).attr("src", "http://openweathermap.org/img/wn/" + curIcon + "2x.png")
+    $(iconEl).attr("src", "https://openweathermap.org/img/wn/" + curIcon + "2x.png")
     $(iconEl).attr("class", "weatherIcon")
     heroH5[0].appendChild(iconEl)
-    heroCardEl.children("h5").children().attr("src", "http://openweathermap.org/img/wn/" + curIcon + "@2x.png")
+    heroCardEl.children("h5").children().attr("src", "https://openweathermap.org/img/wn/" + curIcon + "@2x.png")
     for (var i=0; i<4; i++) {
         heroCardEl.children("ul").children("li").eq(i).children().first().text(curVars[i])
     }
@@ -124,7 +124,7 @@ function renderWeather() {
     for (i=1;i<6;i++){
         idx= i-1;
         forecastCardsEl.children().eq(idx).children("h5").text(moment().add(i, "d").format("l"))
-        forecastCardsEl.children().eq(idx).children("ul").children("li").eq(0).children().attr("src", "http://openweathermap.org/img/wn/" + cityWeather.daily[i].weather[0].icon + "@2x.png")
+        forecastCardsEl.children().eq(idx).children("ul").children("li").eq(0).children().attr("src", "https://openweathermap.org/img/wn/" + cityWeather.daily[i].weather[0].icon + "@2x.png")
         forecastCardsEl.children().eq(idx).children("ul").children("li").eq(1).children().first().text(dailyWeather[i].temp.max)
         forecastCardsEl.children().eq(idx).children("ul").children("li").eq(2).children().first().text(dailyWeather[i].humidity)
         console.log(dailyWeather[i].temp.max)
