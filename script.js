@@ -25,7 +25,6 @@ function searchSubmit (){
 function getCoord (){
     
     var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + searchCity + "&key=3eb93ae01e55489188eadd7629028315&pretty=1";
-    console.log(apiUrl)
     fetch(apiUrl)
     .then(function (response) {
       if (!response.ok) {
@@ -37,7 +36,6 @@ function getCoord (){
     .then(function (response) {
        var cityResponse= response.results[0]
     if (!response.results.length) {
-        console.log('No City found!');
         heroCardEl.removeClass("hidden");
         heroCardEl.children("h5").text("No results found, search again!");
         return
@@ -46,7 +44,6 @@ function getCoord (){
             latitude: cityResponse.geometry.lat,
             longitude: cityResponse.geometry.lng
         }
-            console.log(searchCityCoords)
     })
     .then(getWeather)
     .catch(function (error) {
@@ -57,7 +54,6 @@ function getCoord (){
 function getWeather() {
 
     var weatherApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + searchCityCoords.latitude + "&lon=" + searchCityCoords.longitude +"&units=imperial&exclude=hourly,minutely&appid=09067483d1a4888ae997aa4f31004a36";
-    console.log(weatherApiUrl)
     fetch(weatherApiUrl)
     .then(function (data) {
       if (!data.ok) {
@@ -79,7 +75,6 @@ function saveSearch() {
         return
     }
     savedSearcheslist = savedSearches.map(({name})=> name)
-    console.log(savedSearcheslist)
     if (savedSearcheslist.includes(searchCity)){
         return
     }
@@ -87,7 +82,6 @@ function saveSearch() {
         name: searchCity,
         Coords: searchCityCoords,
     }
-    console.log(savedSearches)   
     savedSearches.push(saveCityObject)
     localStorage.setItem("savedSearchesLocal", JSON.stringify(savedSearches))
 }
@@ -127,9 +121,7 @@ function renderWeather() {
         forecastCardsEl.children().eq(idx).children("ul").children("li").eq(0).children().attr("src", "https://openweathermap.org/img/wn/" + cityWeather.daily[i].weather[0].icon + "@2x.png")
         forecastCardsEl.children().eq(idx).children("ul").children("li").eq(1).children().first().text(dailyWeather[i].temp.max)
         forecastCardsEl.children().eq(idx).children("ul").children("li").eq(2).children().first().text(dailyWeather[i].humidity)
-        console.log(dailyWeather[i].temp.max)
     }
-    console.log(searchCity)
 }
 
 function renderSavedSearches() {
@@ -150,10 +142,8 @@ function addSavedSearch() {
     if (!searchCityEl.val()) {
         return
     }
-    console.log(savedSearcheslist)
     if (savedSearcheslist.includes(searchCity)){
             var matchedCityIdx = savedSearcheslist.indexOf(searchCity)
-            console.log(matchedCityIdx)
             pastSearchesUl.children().eq(matchedCityIdx).addClass("active")
             return
         }
@@ -168,7 +158,6 @@ function addSavedSearch() {
 
 
 function init(){
-  console.log(savedSearches)
   storedSearches = JSON.parse(localStorage.getItem("savedSearchesLocal"))
    if(!storedSearches){
     return
@@ -176,9 +165,6 @@ function init(){
 for (i=0; i< storedSearches.length; i++){
     savedSearches.push(storedSearches[i])
 }
-    console.log(JSON.parse(localStorage.getItem("savedSearchesLocal")))
-    console.log(savedSearches.length)
-    console.log(typeof savedSearches)
     renderSavedSearches();
 }
 
@@ -188,7 +174,6 @@ pastSearchesUl.on("click", (event) => {
     event.preventDefault();
     searchCityEl.val("")
     searchCity = $(event.target).text()
-    console.log(pastSearchesUl.children())
     pastSearchesUl.children().removeClass("active")
     $(event.target).addClass("active")
     getCoord();
